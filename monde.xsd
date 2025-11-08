@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    
+    <xs:element name="monde">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="pays" type="paysType" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:complexType name="paysType">
+        <xs:sequence> 
+            <xs:element name="nom" type="xs:string"/>
+            <xs:element name="capitale" type="xs:string"/>
+            <xs:element name="population" type="populationType"/>
+            <xs:element name="religions" type="religionsType"/>
+            <xs:element name="ville" type="villeType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="frontiere" type="frontiereType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="continent" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="Afrique"/>
+                    <xs:enumeration value="Asie"/>
+                    <xs:enumeration value="Europe"/>
+                    <xs:enumeration value="Amérique"/>
+                    <xs:enumeration value="Australie"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="code" type="xs:string" use="required"/>
+    </xs:complexType>
+    
+    <xs:complexType name="populationType">
+        <xs:simpleContent>
+            <xs:extension base="xs:integer">
+                <xs:attribute name="annee" type="xs:gYear" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    
+    <xs:complexType name="religionsType">
+        <xs:sequence>
+            <xs:element name="musulman" type="xs:integer"/>
+            <xs:element name="chretien" type="xs:integer"/>
+            <xs:element name="juif" type="xs:integer"/>
+            <xs:element name="autre" type="xs:integer"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="villeType">
+        <xs:sequence>
+            <xs:element name="nom" type="xs:string"/>
+            <xs:element name="longitude" type="xs:decimal"/>
+            <xs:element name="latitude" type="xs:decimal"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="frontiereType">
+        <xs:attribute name="pays" type="xs:string" use="required"/>
+        <xs:attribute name="longueur" type="xs:decimal" use="required"/>
+    </xs:complexType>
+    
+</xs:schema>

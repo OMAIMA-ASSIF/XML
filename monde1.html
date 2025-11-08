@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function get(filename) {
+        return new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open("GET", filename);
+          xhr.onload = function () {
+            resolve(xhr.responseXML)
+          };
+          xhr.send();
+        });
+      }
+      const promiseXML = get('monde.xml')
+      const promiseXSL = get('monde-4-1.xsl')
+      Promise.all([promiseXML, promiseXSL])
+        .then(([docXML, docXSL]) => {
+            const xslProcessor = new XSLTProcessor
+            xslProcessor.importStylesheet(docXSL)
+            xslProcessor.setParameter(null, 'continent', 'asia')
+            const frag = xslProcessor.transformToFragment(docXML, document)
+            console.log(frag)
+            document.body.appendChild(frag)
+        })
+    </script>
+  </body>
+</html>
